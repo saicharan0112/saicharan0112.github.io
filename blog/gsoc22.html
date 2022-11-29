@@ -1,0 +1,58 @@
+<Html>    
+    <Head>  
+    <title>  
+    Circuits and Chips  
+    </title>  
+    </Head>  
+    <Body style="background-image:url('../images/bg.png') ;">
+        <h1 style="background-color: #0c984e ;text-align: center;"> <a href="../index.html" style="text-decoration: none; color: black;"> <u> Circuits and Chips </u></a></h1>  
+        
+
+        <h2 style="background-color: rgba(26, 84, 34, 0.534);">OpenFASoC - Google Summer of Code Journey</h2>
+        
+        <p style="text-align: justify;">
+            This blog post is trying to summarise the 5 months effort towards improving OpenFASOC as part of Google Summer of Code (GSoC) program 2022 from my end. I will also try to brief implicitly on a few milestones achieved by this project during this timeline.
+
+OpenFASOC (Open Fully Automated System-on-Chip generator) is a very interesting project in the analog/mixed signal opensource ecosystem. With the no-human-in-loop fully automated digital toolchain, OpenLANE has enabled many people without circuit design background to develop their own digital blocks and tape-out them using Google’s free MPW shuttles. But in the analog/mixed-signal domain, there are no such automatic design generators. Given the challenges of the accuracy and need for customisation from design to design, OpenFASOC is one of the active projects which is placing efforts towards developing a fully automated SoC generator. Currently the project is focusing on developing synthesizable analog block generators where temperature sensor generator is the first of many generators that are going to be added to the repository. At the time of writing this blog post, temperature sensor is the only generator which is fully functional. It is worth to mention that OpenFASOC doesn’t actually follow a traditional analog flow like one would expect(spice netlist development -> layout design -> ….). It follows from the development of auxiliary cells required by the particular generator followed by realising the design in verilog model. Later, this takes the route of digital design flow but it involves a good amount of customisation in the scripts. To know more about how this flow works, refer to the documentation of OpenFASOC1. At this stage, the entire project idea might be misleading for a few people but it is important to understand that OpenFASOC is an SoC generator, not just an analog block generator. At this current stage, the project is focusing on developing the “lego” blocks to build any mansion. This project is led by Dr.Mehdi Saligane from University of Michigan who also happens to be my mentor for the GSoC program. OpenFASOC roots are from the project FASOC lead by Universities of Michigan, Virginia, and Arm, and is funded by DARPA under the program Intelligent Design of Electronic Assets (IDEA).
+<br><br>
+
+OpenFASOC is dependent on a wide variety of tools such as Yosys, OpenROAD, Magic, Klayout, Netgen, Skywater “sky130A” PDK, OpenROAD flow scripts etc. Not to mention, those dependencies themselves are heavily updated day after day. Hence aligning the flow with the latest version of all dependencies is very important. Since the temperature sensor is the only fully functional generator, the first goal was to check this generator with the latest version of all dependencies and update accordingly. Before I started working, there was a CI setup already available which was testing this generator using a docker image. But that docker image is a derived image of efabless/openlane which was older than 6 months. Updating the temperature sensor custom scripts to their latest version and fixing bugs was the priority task for OpenFASOC team. My role in this process was to develop a setup which can test the generator under the latest version of all dependencies. Since I had some experience in setting up a basic CI for Magic and Netgen using docker and GitHub Actions, I continued to apply a similar strategy here. The existing CI was also using a docker image which gave me more confidence with my idea.
+<br><br>
+The real challenge began for me when I was trying to install all tools from scratch using a Dockerfile. I faced a lot of struggle and wasted a lot of time in the process of install all tools. Also it took a major portion of time in the CI flow. Later I learned about the project “conda-eda” which provides conda packages of opensource EDA tools (mostly for FPGAs), the efforts towards providing latest tools with an insane amount of reduction in stress to install them. This immediately improved my productivity. One should definitely checkout this out because it is not only easy and less timing consuming way to install opensource EDA tools but also easily up-gradable. While developing this CI in my own environment, I enabled the basic documentation for this project. This documentation is hosted on readthedocs.io which is now heavily improved.
+<br>
+In the mean while, the scripts were upgraded and the temperature sensor generator is aligned with the latest revision of tools. With the updates from Lucca (my fellow GSoC participant) and Ali (an undergrad student from University of Michigan) from August month to early September, I was able to enable my CI setup (which is explained in this blogpost) including a installer script for OpenFASOC first-time users. Along with that a basic jupyter notebook for the temperature sensor was added which is now heavily improved by Ali and Lucca.
+<br>
+The developed CI came into rescue for the first time when the temperature sensor generator is failing with one of the scripts which needs to be updated according to the latest openroad version.
+<br>
+The entire journey was really incredible with a great combination of teamwork, clear priorities and time-to-time guidance. All the work that I have done are new to me including the CI setup, building notebooks etc.
+<br>
+<br>
+Future works –
+There is definitely a lot of improvement in the tasks I took up. Currently, the CI setup is being improved after learning lessons when it first caught the flow failure with the latest version of its dependencies. In parallel, efforts are aligned towards improving the Jupyter notebook, developing a python module, improving the testing of the python code itself.
+            <br><br>
+            <b>References to checkout – </b>
+            <ul>
+                <li> OpenFASOC documentation hosted on readthedocs.io platform - <a href="www.openfasoc.readthedocs.io/en/latest/index.html">link</a></li>
+                <li>FASOC home page - <a href="https://fasoc.engin.umich.edu/">link</a></li>
+                <li>Conda-eda - <a href="www.github.com/hdl/conda-eda">link</a></li>
+                <li>Docs update #PR72 - <a href="https://github.com/idea-fasoc/OpenFASOC/pull/72">link</a></li>
+                <li>OpenROAD flow scripts update #PR82- <a href="https://github.com/idea-fasoc/OpenFASOC/pull/82">link</a></li>
+                <li>Updates to the previously existing CI and basic Jupyter notebook #PR76- <a href="https://github.com/idea-fasoc/OpenFASOC/pull/76">link</a></li>
+                <li>Jupyter notebook  #PR99- <a href="https://github.com/idea-fasoc/OpenFASOC/pull/99">link</a></li>
+                <li>Fixed to align the temperature sensor to the latest version of openroad #PR111- <a href="https://github.com/idea-fasoc/OpenFASOC/pull/111">link</a></li>
+                <li>Issue #38 - <a href="https://github.com/idea-fasoc/OpenFASOC/issues/38">link</a>, <a href="https://github.com/idea-fasoc/OpenFASOC/pull/88#issuecomment-1227422210">link</a></li>
+            </ul>
+           
+        </p>
+
+        <!--footer-->
+        <hr>
+        <div style="display: flex;">
+            <img style="margin-top: 10px; margin-right:10px" src="../images/linuxnow.gif" alt="opensource" width="100px" height="40px"/>
+            <img style="margin-top: 10px; margin-right:10px" src="https://badges.frapsoft.com/os/v3/open-source.svg?v=103" alt="opensource" width="130px" height="40px"/>
+            <img style="margin-top: 10px; margin-right:10px" src='../images/cc.png' alt="CC BY-NC-ND" width="100px" height="40px"/>
+            <p>&nbsp; Copyright &copy; <a style="text-decoration:none;" href="linkedin.com/saicharan0112">Sai Charan L</a>&nbsp; &nbsp; All content on this blog is shared under the Creative Commons license <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></p>
+        </div>
+        
+    </Body>  
+</Html>  
