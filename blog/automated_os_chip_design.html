@@ -1,0 +1,40 @@
+<Html>    
+    <Head>  
+    <title>  
+    Circuits and Chips  
+    </title>  
+    </Head>  
+    <Body style="background-image:url('../images/bg.png') ;">
+        <h1 style="background-color: rgba(26, 84, 34, 0.534) ;text-align: center;"> <a href="../index.html" style="text-decoration: none; color: black;"> <u> Circuits and Chips </u></a></h1>  
+        
+
+        <h2 style="background-color: rgba(26, 84, 34, 0.534);">Thoughts on Automated opensource chip design</h2>
+        
+        <p style="text-align: justify;">
+            I recently experienced the opensource digital automated flow under the banner name "TinyTapeoout". I developed two designs - 4:2 compressor and a custom-built Quad 3-input Fredkin gate. Though these are my first opensource designs that I actually submitted to the shuttle service offered by efabless, I still have this feeling of wasting silicon wafer and the entire manufacturing efforts to develop some kind of basic kid's digital block because I consider this thing as one of the greatest inventions which enabled literally everything. However, it is also my fault for not spending enough time and submitting some basic rudementory digital blocks. This actually pushed me to put in more efforts in creating more value-oriented ICs. Now coming to the procedure I followed is, in brief you design a digital block either through interactive web interface like Wokwi or write the hdl code in verilog etc, and edit the GitHub template repo such that a GitHub Actions workflow takes care of generating the gds file which then can be manufactured in either Skywater or GF fabs with opensource technology of course. Now I think there are multiple ways to see this opportunity. 
+            <br><br>
+            If you are a digital front-end person who dedicates most of the time developing the architecture of a system which solves serves some purpose, then this is a real boon. Since you no longer care about how its manufactured and all you need is to bring your rtl code to life, this should directly serve your purpose.
+            If you are a digital back-end person who dedicates most the time dealing with synthesis, solving timing issues and clearing drc and lvs violations, then this is really an opportunity for you to improve the workflow itself. You might want to chose a web-based interactive logic design like Wokwi to develop your digital block but your real expertise is tested in improving the workflow. Now the workflow itself is built around openlane and thus other opensource tools like openroad, magic, netgen, yosys etc. And this again opens more opportunities to experiment and improve current opensource EDA tools.
+            If you are a analog person, this has no use to you. You need to draw the schematic, layout, figure out drc and lvs fixing strategies and look for performance bottlenecks to fix them. There is a lot of manual effort involved in this domain because each individual block demands a unique way of analysis depending on the application. I still think that an analog engineer in general is a true IC person. Since these are not low hanging fruits, not many efforts go in this direction. However this is changing as we speak with the introduction of automated generators for analog/mixed-signal blocks. 
+            <br><br>
+            I still believe that opensource efforts in IC design benefits more to the education domain. Hence, for schools and colleges, this is a great opportunity to understand how an IC is developed, how an RTL block is designed and how a chip looks like in the end (once they are out from the Fab). This will create more awareness in the student community and bring some inspiration to study EE in their higher education. 
+            <br><br>
+            However, for an industry person, this creates some inspiration to create partial automated flows inside the company to reduce the design time. Also developing automated flows will help in running faster interations of a design in less time, thus leading to a faster delivery of a product. Many executives actually dream to run SemiIC companies in this way. Not to mention how limited this is, thanks to propriotery softwares behind them giving less space to experiment.
+            As my last thought, I think using such automated flows is OK to focus more on the outcome and the implement the solution (the IC) as fast as possible. But to experience a real IC design flow, one should prefer the traditional way. And I strongly hope that future engineers don't take the chip development as some back end computation, just like how now a software engineer thinks that the dealing with memory while writing the code is some backend running program's job. 
+        </p>
+
+        <!--footer-->
+        <hr>
+        <div style="display: flex;">
+            <a href="../index.html" style="margin-top: 20px; margin-right:10px;"><< Home</a>
+
+            <img src="../images/wafer.webp" alt="" style="margin-top: 10px;margin-right:10px" width="40px" height="40px">
+            <img src="../images/mosfet.png" alt="" style="margin-top: 10px;" width="60px" height="40px">
+            <img style="margin-top: 10px; margin-right:10px" src="../images/linuxnow.gif" alt="opensource" width="100px" height="40px"/>
+            <img style="margin-top: 10px; margin-right:10px" src="https://badges.frapsoft.com/os/v3/open-source.svg?v=103" alt="opensource" width="130px" height="40px"/>
+            <img style="margin-top: 10px; margin-right:10px" src='../images/cc.png' alt="CC BY-NC-ND" width="100px" height="40px"/>
+            <p>&nbsp; Copyright &copy; <a style="text-decoration:none;" href="https://www.linkedin.com/in/saicharan0112/">Sai Charan L</a>&nbsp; &nbsp; All content on this blog is shared under the Creative Commons license <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></p>
+        </div>
+        
+    </Body>  
+</Html>  
