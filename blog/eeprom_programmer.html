@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
     </Head>  
     <Body style="background-image:url('../images/bg.png') ;">
-        <h1 style="background-color: rgb(1, 150, 1) ;text-align: center;"> <a href="https://www.circuitsandchips.in" style="text-decoration: none; color: black;"> <u> Circuits and Chips </u></a></h1>  
+        <h1 style="background-color: rgb(1, 150, 1) ;text-align: center;"> <a href="https://circuitsandchips.com/" style="text-decoration: none; color: black;"> <u> Circuits and Chips </u></a></h1>  
         
 
         <h2 style="background-color: rgb(1, 150, 1);">EEPROM Programmer using Arduino</h2>
@@ -24,7 +24,7 @@
             <br>
             Below code should send serial data to the shiftregister and print back the output of the IC via serial monitor. I think this is the best way to work if LEDs are not present unlike that is shown in the video.
 
-            <p style="background-color: rgb(164, 168, 168); margin-right: 50%;">
+            <p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
                 #define SHIFT_DATA 2 // pin 11 in 595 <br>
 
                 #define SHIFT_CLK 3 // pin 12 in 595 <br>
@@ -63,7 +63,7 @@
             The real reason behind using shiftregisters is because of the number of pins available to set address and access I/O ports in EEPROM. Arduino only has 13 digital pins out of which 0 and 1 can't be used because of the serial monitor feature we are using to get the data from EEPROM. Hence we need to use the next 3 pins are for shiftregisters and next 8 pins are for reading the data. We use the last digital pin #13 for EEPROM's write enable signal. This is important because we need to enable/disable when we are writing/reading the data respectively. There is also this outputEnable pin for EEPROM which lets us see the data that is inside it. Also since now we are using 11 bits of data, we need to connect pin 9 (serial output) of the first shiftregister to the pin 11 (serial input) of the second shiftregister. This way we will be able to store 11 bits along with the outputEnable bit in the two shiftregisters. 
             We implement the same idea inside the code. 
 
-            <p style="background-color: rgb(164, 168, 168); margin-right: 50%;">
+            <p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
                 .... <br>
                 ... <br>
                 .. <br>
@@ -91,7 +91,7 @@
             Now since we have configured our shift registers to send data for 11 address lines and 1 outputEnable, we can actually read data that is inside the EEPROM. Before we write code to do that, we first need to hook up our EEPROM in the setup. Pins 1 to 8 are the first 8 address lines that will be coming from the first shiftregister and pin 23, 22 and 19 are the last three address bits coming from the second register. Also the outputEnable i.e., pin 20 is coming from the last output bit (pin 7) of the second shiftregister. Pins 9 to 11 and 13 to 17 are connected to the digital pins of the Arduino along with the writeEnable (pin 21) to the last digital pin (pin 13 of the Arduino). Remaining connections are obvious from the data sheet. Now given all connections are set, we write the code to read the data from EEPROM.
             <br>
             Below code reads the EEPROM content in the address location #2 - 
-            <p style="background-color: rgb(164, 168, 168); margin-right: 50%;">
+            <p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
                 #define SHIFT_DATA 2 // pin 11 in 595 <br>
                 #define SHIFT_CLK 3 // pin 12 in 595 <br>
                 #define SHIFT_LATCH 4 // pin 14 in 595 <br>
@@ -145,7 +145,7 @@
 
             Writing the data is very much similar to that of reading the data but only thing that needs to be done in addition is to enable the writeEnable (connected to pin#13 of Arduino) and set the pinmodes of Arduino. The delay something that needs to be picked from the datasheet. The value mentioned is 1 us but I gave 10us to increase the window size but this is not necessary. Ben Eater in his video troublshoots this part for quite some time. Below is the code to do that - 
 
-            <p style="background-color: rgb(164, 168, 168); margin-right: 50%;">
+            <p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
                 .... <br>
                 ... <br>
                 .. <br>
@@ -186,7 +186,7 @@
         <img src="../images/line1.gif" alt="" style="width: 1000px;">
         <br><br>
         <div style="display: flex;">
-            <a href="https://www.circuitsandchips.in" style="margin-top: 20px; margin-right:10px;"><< Home</a>
+            <a href="https://circuitsandchips.com/" style="margin-top: 20px; margin-right:10px;"><< Home</a>
 
             <img src="../images/wafer.webp" alt="" style="margin-top: 10px;margin-right:10px" width="40px" height="40px">
             <img src="../images/mosfet.png" alt="" style="margin-top: 10px;" width="60px" height="40px">
