@@ -6,16 +6,100 @@
     <link rel="stylesheet" href="/assets/css/style.css">
   </head>
   <body class="main">
-    <h1 class="title">Circuits and Chips</h1>
-    <nav class="nav">
+      <div class="side-bar">
+        
+        <a href="/index.html" style="text-decoration: none;">
+          <img src="/assets/images/mosfet.png" alt="" style="height: 3cm; width: 5cm; margin-left:auto; margin-right: auto; display: block;">
+          <h2 style="text-align: center; color: rgb(253, 253, 253);font-size: larger;">
+          Circuits <br> and Chips
+        </h2></a>
+        <p style="padding-left: 10px; font-size: small; padding-right: 5px; text-align: center; color: rgb(201, 206, 206);">a place to write on software, chip development and linux, for fun and in an informal way.</p>
+        <br><br>
+        <nav style="text-align: center;">
     
-      <a href="/" class="current">Home</a>
+      <a class="link"  href="/" class="link-current">Blog</a>
+      <br>
+      <br>
     
-      <a href="/about.html" >About</a>
+      <a class="link"  href="/about.html" >About</a>
+      <br>
+      <br>
     
-      <a href="/blog.html" >Blog</a>
+      <a class="link"  href="/categories/linux-and-more.html" >Linux and more</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/categories/software.html" >Software</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/categories/hardware.html" >Hardware</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
     
 </nav>
-    <h1>hello world!</h1>
+        <br><br>
+      </div>
+      <div class="main-section">
+        <h1 class="title">Circuits and Chips </h1>
+        &nbsp - a place where I write on broad variety of topics like regressions, chip development, open source chip design, linux environment, hardware setup, interesting history facts etc, for fun. The content can be basic and informal. I sometimes bring in philosophy and neuroscience too into this website ;)
+        <br><br>
+        <hr>
+<h2> <u>Blog</u></h2>
+
+<ul>
+  
+    <li>
+      <h3><a href="/hardware/2022/09/10/Mask-Preparation.html">Mask Preparation</a></h3>
+      <p>As a CAD engineer, I got the privilege to work with Mask Preparation team to help with their software tools. Most people are aware of what happens from the RTL stage to the final gds file stream out, for both digital and mixed-analog flow. I got to go ahead of the process and witness the after-steps in the IC developement flow.</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/hardware/2022/08/24/Reversible-Logic.html">Reversible Logic</a></h3>
+      <p>It is considered that if a system is able to regain its original state no matter after how many computations, virutally the energy lost is zero. This is very much evident in the quantum world. Also by saying that a circuit is reversible, it means that if the generated output is fed back to the same system (here one could consider as a cascode of same systems), the output in the end of the second system is same as that of input. Also these systems generate garbage bits in the end which are of no use except if you want to get back your inputs.</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/software/hardware/2022/08/22/First-Interactions-with-CI.html">First Interactions With Ci</a></h3>
+      <p>My First interaction with the concept of CI (regression) in the world of chip design</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/history/2022/08/21/Bell-Labs.html">Bell Labs</a></h3>
+      <p>If you ever wanted to be part of an organization which can offer insane freedom and a huge financial support to build whatever you want, I bet you don’t have any other dream than joining such organization. Well, one such organizations (I highly doubt if a second one ever existed… maybe PARC, R&amp;D of Xerox) was Bell Laboratories (Bell Labs), the R&amp;D division of AT&amp;T, once upon a time, the only and largest telephone service company in the US.</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/linux-and-more/2022/08/20/Alpine-Linux.html">Alpine Linux</a></h3>
+      <p>In the world of Ubuntu, Linux Mint, Arch and many more, Alpine Linux was fresh and light to me.</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/linux-and-more/2022/08/10/mimic-server-with-old-laptop.html">Mimic Server With Old Laptop</a></h3>
+      <p>I have been reusing my old laptop for storage purposes, which runs Alpine OS on it. Nothing professional but just for fun. It is a 6th generation i3 processor 6006 with dual core processor 2.0 GHz, which is no longer supported by intel. For some reason, high end OS doesn’t work correctly. If you have already read my old Alpine blog, you might have understood the situation with the installations of various OS. In this blog post, I will try to give an overview of all steps starting from installation to setting up the static IP address along with SSH logins and sudoers file</p>
+
+    </li>
+  
+    <li>
+      <h3><a href="/linux-and-more/hardware/2022/07/15/eeprom-programmer.html">Eeprom Programmer</a></h3>
+      <p>From quite some time, I have been thinking about building the 8-bit computer based on SAP-1 architecture that is demoed on Ben Eater’s YouTube channel. But I never gave any further thoughts and always left that idea behind just because I thought it is a bit complex and involved a lot of components. However, I recently I saw a video as part of that series where an EEPROM programmer is build using Arduino and a shiftregister. It barely has more than 3 components to build something that interesting. I think that is the only video with the longest duration in the entire series. So, based on the number of components used in the process, I think its doeable and started planning to do it during my vacation because at some point I will be bored and getting engaged in this task can be pretty fun.</p>
+
+    </li>
+  
+</ul>
+<br><br>
+<b> <u>Note:</u></b> The theme of this blog is inspired from <a href="http://opencircuitdesign.com">OpenCircuitDesign</a> which is maintained by <b>Timothy Edwards</b> - one of the leading people in Opensource EDA and chip development tools, and one of my favorite and inspiring engineers. If you are a software and/or a semiconductors engineer, I would highly recommend to follow his work.
+        <br><br>
+        <hr>
+      </div>
   </body>
 </html>

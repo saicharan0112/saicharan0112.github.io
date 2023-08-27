@@ -2,4 +2,20 @@
 layout: default
 title: Home
 ---
-<h1>{{ "Hello World!" | downcase }}</h1>
+
+<h1 class="title">Circuits and Chips </h1>
+        &nbsp - a place where I write on broad variety of topics like regressions, chip development, open source chip design, linux environment, hardware setup, interesting history facts etc, for fun. The content can be basic and informal. I sometimes bring in philosophy and neuroscience too into this website ;)
+        <br><br>
+        <hr>
+<h2> <u>Blog</u></h2>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      {{ post.excerpt }}
+    </li>
+  {% endfor %}
+</ul>
+<br><br>
+<b> <u>Note:</u></b> The theme of this blog is inspired from <a href="http://opencircuitdesign.com">OpenCircuitDesign</a> which is maintained by <b>Timothy Edwards</b> - one of the leading people in Opensource EDA and chip development tools, and one of my favorite and inspiring engineers. If you are a software and/or a semiconductors engineer, I would highly recommend to follow his work.

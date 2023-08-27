@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Circuits and Chips - Eeprom Programmer</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body class="main">
+      <div class="side-bar">
+        
+        <a href="/index.html" style="text-decoration: none;">
+          <img src="/assets/images/mosfet.png" alt="" style="height: 3cm; width: 5cm; margin-left:auto; margin-right: auto; display: block;">
+          <h2 style="text-align: center; color: rgb(253, 253, 253);font-size: larger;">
+          Circuits <br> and Chips
+        </h2></a>
+        <p style="padding-left: 10px; font-size: small; padding-right: 5px; text-align: center; color: rgb(201, 206, 206);">a place to write on software, chip development and linux, for fun and in an informal way.</p>
+        <br><br>
+        <nav style="text-align: center;">
+    
+      <a class="link"  href="/" >Blog</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/about.html" >About</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/categories/linux-and-more.html" >Linux and more</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/categories/software.html" >Software</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="/categories/hardware.html" >Hardware</a>
+      <br>
+      <br>
+    
+      <a class="link"  href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
+    
+</nav>
+        <br><br>
+      </div>
+      <div class="main-section">
+        <h2 class="post-title">Eeprom Programmer</h2>
+<p style="color: rgb(77, 76, 76);">Date: 15 Jul 2022 </p>
+<p class="post-content">
+    <p>From quite some time, I have been thinking about building the 8-bit computer based on SAP-1 architecture that is demoed on Ben Eater’s YouTube channel. But I never gave any further thoughts and always left that idea behind just because I thought it is a bit complex and involved a lot of components. However, I recently I saw a video as part of that series where an EEPROM programmer is build using Arduino and a shiftregister. It barely has more than 3 components to build something that interesting. I think that is the only video with the longest duration in the entire series. So, based on the number of components used in the process, I think its doeable and started planning to do it during my vacation because at some point I will be bored and getting engaged in this task can be pretty fun.</p>
+
+<p>So I started collecting all the components that are required - an EEPROM (28C16 2K x 8 from Excel Microelectronics), 8-bit shiftregisters (74HS595 from ST Microelectronics), breadboard, jumper wires and an Arduino Uno board (I tried with nano version but maybe because of not making it sit on the breadboard correctly, it didn’t quite do the job). As you can see, it involved all the regular components though I had to run between shops to find the EEPROM itself. I planned to just implement what is said on the video. To a person like me who barely worked on any ICs and did any Arduino projects, replicating what is done on the video is a big achievement. So, I thought that would be a good starting point.
+<br />
+<b>Note:</b> When I started building it, I had a few issues with the LEDs itself. So I thought to print the output directly to the serial monitor instead of observing it using LEDs. Hence I didn’t go for another round of shopping.
+<br /><br />
+<b>Testing and configuring Arduino for the 74595 shiftregisters - </b>
+<br />
+To begin with, I first tested the shiftregister itself. Pin 11 is the serial data pin, pin 12 is the clock pin for the register itself and pin 14 is the clock of the latch inside the 595 IC. Unlike 74164 shiftregister IC, the 74595 IC has an output storage register. The main difference that I observed is the way the data is released via the parallel output pins. For the 74595, there is an option to store the output and not release it immediately hence the latch clock. And there is no such thing for 74164 serial-in parallel-out 8-bit shiftregister. 
+First we define the pins and then we declare the pinModes. There is a very comfortable function to out the serial data in the Arduino library which is called shiftOut(). So once the data is serially sent from the Arduino to the inputs of the shift register, it is then stored in that 8-bit output register. Only if the latch clock is high, this data is sent out. Hence we create a pulse using digitalWrite() function. 
+<br />
+Below code should send serial data to the shiftregister and print back the output of the IC via serial monitor. I think this is the best way to work if LEDs are not present unlike that is shown in the video.</p>
+
+<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
+#define SHIFT_DATA 2 // pin 11 in 595 <br />
+
+#define SHIFT_CLK 3 // pin 12 in 595 <br />
+
+#define SHIFT_LATCH 4 // pin 14 in 595<br />
+
+void setup() {<br />
+    
+    pinMode(SHIFT_DATA, OUTPUT);<br />
+    
+    pinMode(SHIFT_CLK, OUTPUT); <br />
+
+    pinMode(SHIFT_LATCH, OUTPUT); <br />
+
+
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, #data);<br />
+
+    digitalWrite(SHIFT_LATCH, LOW);<br />
+
+    digitalWrite(SHIFT_LATCH, HIGH);<br />
+    
+    digitalWrite(SHIFT_LATCH, LOW);<br />
+    
+    Serial.begin(9600);<br />
+
+    # outputs of 74595 are connected to Arduino digital pins from 5 to 12. <br />
+    for (pin = 5; pin &lt;= 12; pin += 1){<br />
+        pinMode(pin, OUTPUT);<br />
+        Serial.println(digitalWrite(pin));<br />
+    }<br />
+    
+</p>
+
+<p><b>Confiuguring two shiftregisters to store 11 bits for the address info- </b>
+<br />
+The real reason behind using shiftregisters is because of the number of pins available to set address and access I/O ports in EEPROM. Arduino only has 13 digital pins out of which 0 and 1 can’t be used because of the serial monitor feature we are using to get the data from EEPROM. Hence we need to use the next 3 pins are for shiftregisters and next 8 pins are for reading the data. We use the last digital pin #13 for EEPROM’s write enable signal. This is important because we need to enable/disable when we are writing/reading the data respectively. There is also this outputEnable pin for EEPROM which lets us see the data that is inside it. Also since now we are using 11 bits of data, we need to connect pin 9 (serial output) of the first shiftregister to the pin 11 (serial input) of the second shiftregister. This way we will be able to store 11 bits along with the outputEnable bit in the two shiftregisters. 
+We implement the same idea inside the code.</p>
+
+<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
+.... <br />
+... <br />
+.. <br />
+void setAddress(int address, bool outputEnable){ <br />
+
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address &gt;&gt; 8) | (outputEnable ? 0x00 : 0x80) );<br />
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);<br />
+    
+    digitalWrite(SHIFT_LATCH, LOW);<br />
+    digitalWrite(SHIFT_LATCH, HIGH);<br />
+    digitalWrite(SHIFT_LATCH, LOW);<br />
+    
+    }<br />
+..... <br />
+... <br />
+.. <br />
+. <br />
+    
+</p>
+
+<p><b>Reading data from EEPROM - </b>
+<br /></p>
+
+<p>Now since we have configured our shift registers to send data for 11 address lines and 1 outputEnable, we can actually read data that is inside the EEPROM. Before we write code to do that, we first need to hook up our EEPROM in the setup. Pins 1 to 8 are the first 8 address lines that will be coming from the first shiftregister and pin 23, 22 and 19 are the last three address bits coming from the second register. Also the outputEnable i.e., pin 20 is coming from the last output bit (pin 7) of the second shiftregister. Pins 9 to 11 and 13 to 17 are connected to the digital pins of the Arduino along with the writeEnable (pin 21) to the last digital pin (pin 13 of the Arduino). Remaining connections are obvious from the data sheet. Now given all connections are set, we write the code to read the data from EEPROM.
+<br />
+Below code reads the EEPROM content in the address location #2 -</p>
+<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
+#define SHIFT_DATA 2 // pin 11 in 595 <br />
+#define SHIFT_CLK 3 // pin 12 in 595 <br />
+#define SHIFT_LATCH 4 // pin 14 in 595 <br />
+#define EEPROM_DO 5  <br />
+#define EEPROM_D7 12 <br />
+#define WRITE_ENABLE 13 <br />
+
+void setAddress(int address, bool outputEnable){ <br />
+
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address &gt;&gt; 8) | (outputEnable ? 0x00 : 0x80) ); <br />
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address); <br />
+    
+    digitalWrite(SHIFT_LATCH, LOW); <br />
+    digitalWrite(SHIFT_LATCH, HIGH); <br />
+    digitalWrite(SHIFT_LATCH, LOW); <br />
+
+} <br />
+
+byte readEEPROM(int address){ <br />
+
+    for (int pin = 5; pin &lt;= 12; pin += 1){ <br />
+    pinMode(pin, INPUT); <br />
+    } <br />
+    setAddress(address, true); <br />
+    byte data = 0; <br />
+    for (int pin = 12; pin &gt;= 5; pin -= 1) { <br />
+    data = (data &lt;&lt; 1) + digitalRead(pin); <br />
+    } <br />
+    return data; <br />
+} <br />
+
+void setup() {<br />
+    // put your setup code here, to run once:<br />
+    
+    pinMode(SHIFT_DATA, OUTPUT);<br />
+    pinMode(SHIFT_CLK, OUTPUT); <br />
+    pinMode(SHIFT_LATCH, OUTPUT); <br />
+    
+    digitalWrite(13, HIGH);<br />
+    pinMode(13, OUTPUT);<br />
+    
+    Serial.begin(9600);<br />
+    
+    // Read individual address <br />
+    Serial.println(readEEPROM(2));<br />
+
+</p>
+
+<p><b>Writing data to EEPROM - </b>
+<br /></p>
+
+<p>Writing the data is very much similar to that of reading the data but only thing that needs to be done in addition is to enable the writeEnable (connected to pin#13 of Arduino) and set the pinmodes of Arduino. The delay something that needs to be picked from the datasheet. The value mentioned is 1 us but I gave 10us to increase the window size but this is not necessary. Ben Eater in his video troublshoots this part for quite some time. Below is the code to do that -</p>
+
+<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
+.... <br />
+... <br />
+.. <br />
+void writeEEPROM(int address, byte data){ <br />
+    for (int pin = 5; pin &lt;= 12; pin += 1) { <br />
+        pinMode(pin, OUTPUT);<br />
+        }<br />
+        setAddress(address, false);<br />
+        for (int pin = 5; pin &lt;= 12; pin += 1) {<br />
+        digitalWrite(pin, data &amp; 1);<br />
+        data = data &gt;&gt; 1;<br />
+        }<br />
+        digitalWrite(13, LOW);<br />
+        delayMicroseconds(10);<br />
+        digitalWrite(13, HIGH);<br />
+        delay(10);<br />
+    
+    }<br />
+..... <br />
+... <br />
+.. <br />
+. <br />
+    
+</p>
+
+<p><b>Complete code to read and write data to EEPROM is available on GitHub - <a href="https://github.com/saicharan0112/eeprom_programmer/blob/main/eeprom_shiftreg_testing.ino">link to my GitHub repository</a> </b>
+<br />
+<br />
+Here is the image of my final setup where between all those jumper wires forest lies those three ICs. <br />
+<img src="/assets/images/eeprom_programmer.jpg" alt="eeprom_programmer_final_setup" style="width: 800px;" />
+<br /><br />
+<b>Closing thoughts - </b>
+<br />
+It was really exciting to build something like this. In the end, I had an EEPROM with the 7-segment display code available. I can reuse this process to build a lookup table to store values for operations and also store opcodes for something like the 8-bit computer. Given I never used EEPROMs and shiftregisters in this manner, it was really educational with all those troublshoots in the process. Especially learning the art of handling jumper wires and neatly wiring them.</p>
+
+</p>
+
+        <br><br>
+        <hr>
+      </div>
+  </body>
+</html>
