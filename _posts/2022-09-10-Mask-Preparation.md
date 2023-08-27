@@ -4,7 +4,7 @@ author: jack
 category: [hardware]
 --- 
 
-As a CAD engineer, I got the privilege to work with Mask Preparation team to help with their software tools. Most people are aware of what happens from the RTL stage to the final gds file stream out, for both digital and mixed-analog flow. I got to go ahead of the process and witness the after-steps in the IC developement flow. 
+As part of my job, I work with Mask Preparation team to help with their software tools. Most people are aware of what happens from the RTL stage to the final gds file stream out, for both digital and mixed-analog flow. I got to go ahead of the process and witness the after-steps in the IC developement flow. 
 
 Fortunately, I got a great reference book which covers the very specific part of what I am currently exploring. For the sake of this blog post I will keep things brief but for a detailed information refer to the book <b>'Handbook of Photomask Manufacturing Technology</b> by Syed Rizvi'. The steps I mentioned here are covered in the first two chapters in the mentioned book. I am not aware of how a mask is manufactured and what kind of machines are involved in the process so if you are interested in those concepts, which is the continuation of this blog post, refer to the above mentioned book. 
 

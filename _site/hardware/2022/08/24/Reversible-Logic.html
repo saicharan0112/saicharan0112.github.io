@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Circuits and Chips - Reversible Logic</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+
   </head>
   <body class="main">
       <div class="side-bar">
@@ -17,27 +18,31 @@
         <br><br>
         <nav style="text-align: center;">
     
-      <a class="link"  href="/" >Blog</a>
+      <a class="link" style="text-decoration: none;" href="/" >Blog</a>
       <br>
       <br>
     
-      <a class="link"  href="/about.html" >About</a>
+      <a class="link" style="text-decoration: none;" href="/about.html" >About</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/linux-and-more.html" >Linux and more</a>
+      <a class="link" style="text-decoration: none;" href="/categories/linux-and-more.html" >Linux and more</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/software.html" >Software</a>
+      <a class="link" style="text-decoration: none;" href="/categories/software.html" >Software</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/hardware.html" >Hardware</a>
+      <a class="link" style="text-decoration: none;" href="/categories/hardware.html" >Hardware</a>
       <br>
       <br>
     
-      <a class="link"  href="https://vlsiresources.com" >Resources</a>
+      <a class="link" style="text-decoration: none;" href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="https://github.com/saicharan0112" >GitHub</a>
       <br>
       <br>
     
@@ -47,7 +52,7 @@
       <div class="main-section">
         <h2 class="post-title">Reversible Logic</h2>
 <p style="color: rgb(77, 76, 76);">Date: 24 Aug 2022 </p>
-<p class="post-content">
+<p class="post-content" style="text-align: justify;">
     <p>It is considered that if a system is able to regain its original state no matter after how many computations, virutally the energy lost is zero. This is very much evident in the quantum world. Also by saying that a circuit is reversible, it means that if the generated output is fed back to the same system (here one could consider as a cascode of same systems), the output in the end of the second system is same as that of input. Also these systems generate garbage bits in the end which are of no use except if you want to get back your inputs.</p>
 
 <p>These concepts dates back to 1960s and 70s I guess (based on the reference and especially the article from R Feynman). In his article, he explains the fundamentals of these concepts and also introduces CNOT and other gates. To develop logic circuits, many quantum gates were introduced. I think Feynman’s CNOT gate is the basic ones. Later Toffle, Fredkin, MSR, Peres and many more came into picture. Based on the usage of these gates and also the amount of garbage bits generated, a gate’s efficiency is measured. Later, in the year 2005, David Pan and Mahesh Nalasani wrote an article in IEEE Potentials magazine on reversible logic. There they tried to divide gates based on the inputs/outputs. After reading that article, one could understand that these gates can actually be used to realize traditional boolean logic circuits like adders, multipliers etc. Though I get that such gates actually provide great benefits in very low power and quantum computation applications, I still don’t understand the practical application of them. However, even quantum based applications are also not practical in its current state of research and operation, so no stress to find answers at this stage. But one interesting thing which I found is about the Fredkin gate. This is a {3,3} gate which can be programmed with its inputs so that it can act like any of the primitive gates (and, or, not). Hence this is also called as a universal gate. Also a Peres gate can implement a half adder and using two such gates, one can implement a full adder. An effective implementation of the Peres gate can be referred from the 3rd reference below. Also recently a detailed review on reversible adders was published which can accessed from the first reference. Remembering the old 7400 TTL logic ICs, I thought it can be an opportunity to build a similar IC but with these quantum gates. Imagine when you have an IC which can only do one job but later you think that it can be ‘programmed’ (by adjusting its inputs), it can function in various other logic states. That’s the idea behind my MPW submission - reversible_programmable_logic_ic. There is a detailed explanation on how the Fredkin gate can function as an AND/OR/NOT gate inside the Potentials magazine that I mentioned. In the depth that I studied, a lot of research is happening to realize various digital blocks with less or even no garbage outputs and with a minimized set of basic quantum gates like CNOT etc. There are other parameters too to measure how efficient a quantum logic circuit is, which can be seen inside the first reference.</p>
@@ -68,7 +73,8 @@
 </p>
 
         <br><br>
-        <hr>
+        <hr style="background-color: black ; height: 0.05cm;">
+        <br>
       </div>
   </body>
 </html>

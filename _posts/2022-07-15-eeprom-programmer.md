@@ -17,65 +17,50 @@ First we define the pins and then we declare the pinModes. There is a very comfo
 <br>
 Below code should send serial data to the shiftregister and print back the output of the IC via serial monitor. I think this is the best way to work if LEDs are not present unlike that is shown in the video.
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-#define SHIFT_DATA 2 // pin 11 in 595 <br>
+<!-- <p style="background-color: rgb(164, 168, 168); margin-right: 20%;"> -->
+```c++
 
-#define SHIFT_CLK 3 // pin 12 in 595 <br>
+#define SHIFT_DATA 2 // pin 11 in 595 
+#define SHIFT_CLK 3 // pin 12 in 595
+#define SHIFT_LATCH 4 // pin 14 in 595
 
-#define SHIFT_LATCH 4 // pin 14 in 595<br>
+void setup() {
+    pinMode(SHIFT_DATA, OUTPUT);
+    pinMode(SHIFT_CLK, OUTPUT);
+    pinMode(SHIFT_LATCH, OUTPUT);
 
-void setup() {<br>
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, #data);
+    digitalWrite(SHIFT_LATCH, LOW);
+    digitalWrite(SHIFT_LATCH, HIGH);
+    digitalWrite(SHIFT_LATCH, LOW);
     
-    pinMode(SHIFT_DATA, OUTPUT);<br>
+    Serial.begin(9600);
+
+    # outputs of 74595 are connected to Arduino digital pins from 5 to 12.
+    for (pin = 5; pin <= 12; pin += 1){
+        pinMode(pin, OUTPUT);
+        Serial.println(digitalWrite(pin));
+    }
     
-    pinMode(SHIFT_CLK, OUTPUT); <br>
-
-    pinMode(SHIFT_LATCH, OUTPUT); <br>
-
-
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, #data);<br>
-
-    digitalWrite(SHIFT_LATCH, LOW);<br>
-
-    digitalWrite(SHIFT_LATCH, HIGH);<br>
-    
-    digitalWrite(SHIFT_LATCH, LOW);<br>
-    
-    Serial.begin(9600);<br>
-
-    # outputs of 74595 are connected to Arduino digital pins from 5 to 12. <br>
-    for (pin = 5; pin <= 12; pin += 1){<br>
-        pinMode(pin, OUTPUT);<br>
-        Serial.println(digitalWrite(pin));<br>
-    }<br>
-    
-</p>
+```
 
 <b>Confiuguring two shiftregisters to store 11 bits for the address info- </b>
 <br>
 The real reason behind using shiftregisters is because of the number of pins available to set address and access I/O ports in EEPROM. Arduino only has 13 digital pins out of which 0 and 1 can't be used because of the serial monitor feature we are using to get the data from EEPROM. Hence we need to use the next 3 pins are for shiftregisters and next 8 pins are for reading the data. We use the last digital pin #13 for EEPROM's write enable signal. This is important because we need to enable/disable when we are writing/reading the data respectively. There is also this outputEnable pin for EEPROM which lets us see the data that is inside it. Also since now we are using 11 bits of data, we need to connect pin 9 (serial output) of the first shiftregister to the pin 11 (serial input) of the second shiftregister. This way we will be able to store 11 bits along with the outputEnable bit in the two shiftregisters. 
 We implement the same idea inside the code. 
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-.... <br>
-... <br>
-.. <br>
-void setAddress(int address, bool outputEnable){ <br>
+```c++
+void setAddress(int address, bool outputEnable){
 
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address >> 8) | (outputEnable ? 0x00 : 0x80) );<br>
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);<br>
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address >> 8) | (outputEnable ? 0x00 : 0x80) );
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
     
-    digitalWrite(SHIFT_LATCH, LOW);<br>
-    digitalWrite(SHIFT_LATCH, HIGH);<br>
-    digitalWrite(SHIFT_LATCH, LOW);<br>
+    digitalWrite(SHIFT_LATCH, LOW);
+    digitalWrite(SHIFT_LATCH, HIGH);
+    digitalWrite(SHIFT_LATCH, LOW);
     
-    }<br>
-..... <br>
-... <br>
-.. <br>
-. <br>
-    
-</p>
+    }
+```
 
 
 <b>Reading data from EEPROM - </b>
@@ -84,92 +69,91 @@ void setAddress(int address, bool outputEnable){ <br>
 Now since we have configured our shift registers to send data for 11 address lines and 1 outputEnable, we can actually read data that is inside the EEPROM. Before we write code to do that, we first need to hook up our EEPROM in the setup. Pins 1 to 8 are the first 8 address lines that will be coming from the first shiftregister and pin 23, 22 and 19 are the last three address bits coming from the second register. Also the outputEnable i.e., pin 20 is coming from the last output bit (pin 7) of the second shiftregister. Pins 9 to 11 and 13 to 17 are connected to the digital pins of the Arduino along with the writeEnable (pin 21) to the last digital pin (pin 13 of the Arduino). Remaining connections are obvious from the data sheet. Now given all connections are set, we write the code to read the data from EEPROM.
 <br>
 Below code reads the EEPROM content in the address location #2 - 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-#define SHIFT_DATA 2 // pin 11 in 595 <br>
-#define SHIFT_CLK 3 // pin 12 in 595 <br>
-#define SHIFT_LATCH 4 // pin 14 in 595 <br>
-#define EEPROM_DO 5  <br>
-#define EEPROM_D7 12 <br>
-#define WRITE_ENABLE 13 <br>
 
-void setAddress(int address, bool outputEnable){ <br>
+```c++
 
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address >> 8) | (outputEnable ? 0x00 : 0x80) ); <br>
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address); <br>
+#define SHIFT_DATA 2 // pin 11 in 595 
+#define SHIFT_CLK 3 // pin 12 in 595
+#define SHIFT_LATCH 4 // pin 14 in 595 
+#define EEPROM_DO 5  
+#define EEPROM_D7 12 
+#define WRITE_ENABLE 13 
+
+void setAddress(int address, bool outputEnable){ 
+
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address >> 8) | (outputEnable ? 0x00 : 0x80) ); 
+    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
     
-    digitalWrite(SHIFT_LATCH, LOW); <br>
-    digitalWrite(SHIFT_LATCH, HIGH); <br>
-    digitalWrite(SHIFT_LATCH, LOW); <br>
+    digitalWrite(SHIFT_LATCH, LOW);
+    digitalWrite(SHIFT_LATCH, HIGH);
+    digitalWrite(SHIFT_LATCH, LOW); 
 
-} <br>
+} 
 
-byte readEEPROM(int address){ <br>
+byte readEEPROM(int address){ 
 
-    for (int pin = 5; pin <= 12; pin += 1){ <br>
-    pinMode(pin, INPUT); <br>
-    } <br>
-    setAddress(address, true); <br>
-    byte data = 0; <br>
-    for (int pin = 12; pin >= 5; pin -= 1) { <br>
-    data = (data << 1) + digitalRead(pin); <br>
-    } <br>
-    return data; <br>
-} <br>
+    for (int pin = 5; pin <= 12; pin += 1){ 
+    pinMode(pin, INPUT); 
+    } 
+    setAddress(address, true); 
+    byte data = 0; 
+    for (int pin = 12; pin >= 5; pin -= 1) { 
+    data = (data << 1) + digitalRead(pin); 
+    } 
+    return data; 
+} 
 
-void setup() {<br>
-    // put your setup code here, to run once:<br>
+void setup() {
+    // put your setup code here, to run once:
     
-    pinMode(SHIFT_DATA, OUTPUT);<br>
-    pinMode(SHIFT_CLK, OUTPUT); <br>
-    pinMode(SHIFT_LATCH, OUTPUT); <br>
+    pinMode(SHIFT_DATA, OUTPUT);
+    pinMode(SHIFT_CLK, OUTPUT); 
+    pinMode(SHIFT_LATCH, OUTPUT); 
     
-    digitalWrite(13, HIGH);<br>
-    pinMode(13, OUTPUT);<br>
+    digitalWrite(13, HIGH);
+    pinMode(13, OUTPUT);
     
-    Serial.begin(9600);<br>
+    Serial.begin(9600);
     
-    // Read individual address <br>
-    Serial.println(readEEPROM(2));<br>
+    // Read individual address 
+    Serial.println(readEEPROM(2));
 
-</p>
+```
 
 <b>Writing data to EEPROM - </b>
-<br>
+
 
 Writing the data is very much similar to that of reading the data but only thing that needs to be done in addition is to enable the writeEnable (connected to pin#13 of Arduino) and set the pinmodes of Arduino. The delay something that needs to be picked from the datasheet. The value mentioned is 1 us but I gave 10us to increase the window size but this is not necessary. Ben Eater in his video troublshoots this part for quite some time. Below is the code to do that - 
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-.... <br>
-... <br>
-.. <br>
-void writeEEPROM(int address, byte data){ <br>
-    for (int pin = 5; pin <= 12; pin += 1) { <br>
-        pinMode(pin, OUTPUT);<br>
-        }<br>
-        setAddress(address, false);<br>
-        for (int pin = 5; pin <= 12; pin += 1) {<br>
-        digitalWrite(pin, data & 1);<br>
-        data = data >> 1;<br>
-        }<br>
-        digitalWrite(13, LOW);<br>
-        delayMicroseconds(10);<br>
-        digitalWrite(13, HIGH);<br>
-        delay(10);<br>
+```c++
+
+void writeEEPROM(int address, byte data){ 
+    for (int pin = 5; pin <= 12; pin += 1) { 
+        pinMode(pin, OUTPUT);
+        }
+        setAddress(address, false);
+        for (int pin = 5; pin <= 12; pin += 1) {
+        digitalWrite(pin, data & 1);
+        data = data >> 1;
+        }
+        digitalWrite(13, LOW);
+        delayMicroseconds(10);
+        digitalWrite(13, HIGH);
+        delay(10);
     
-    }<br>
-..... <br>
-... <br>
-.. <br>
-. <br>
+    }
+```
+
     
 </p>            
 
 <b>Complete code to read and write data to EEPROM is available on GitHub - <a href="https://github.com/saicharan0112/eeprom_programmer/blob/main/eeprom_shiftreg_testing.ino">link to my GitHub repository</a> </b>
-<br>
-<br>
-Here is the image of my final setup where between all those jumper wires forest lies those three ICs. <br>
+
+
+Here is the image of my final setup where between all those jumper wires forest lies those three ICs. 
 <img src="/assets/images/eeprom_programmer.jpg" alt="eeprom_programmer_final_setup" style="width: 800px;">
-<br><br>
+
+
 <b>Closing thoughts - </b>
-<br>
+
 It was really exciting to build something like this. In the end, I had an EEPROM with the 7-segment display code available. I can reuse this process to build a lookup table to store values for operations and also store opcodes for something like the 8-bit computer. Given I never used EEPROMs and shiftregisters in this manner, it was really educational with all those troublshoots in the process. Especially learning the art of handling jumper wires and neatly wiring them.

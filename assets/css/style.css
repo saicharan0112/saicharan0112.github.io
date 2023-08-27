@@ -16,23 +16,24 @@
 }
 
 .main-section{
- margin-top: 1px;
- margin-left: 190px;
- margin-right: auto;
- display: block;
+    margin-top: 1px;
+    margin-left: 200px;
+    display: block;
+    margin-right: 0.5cm;
 }
 
 .link{
     color: rgb(6, 80, 11);
     background-color: rgb(238, 231, 213);
-    border:2px solid rgb(0, 0, 0);
+    border:3px solid rgb(0, 0, 0);
     border-radius: 0.2cm;
     padding: 0.15cm;
 }
 
+
 .link-current{
     color: rgb(254, 248, 248);
-    background-color: rgb(240, 209, 130);
+    background-color: rgb(14, 12, 7);
     border:4px solid rgb(0, 0, 0);
     padding: 0.15cm;
 }

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Circuits and Chips - Eeprom Programmer</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+
   </head>
   <body class="main">
       <div class="side-bar">
@@ -17,27 +18,31 @@
         <br><br>
         <nav style="text-align: center;">
     
-      <a class="link"  href="/" >Blog</a>
+      <a class="link" style="text-decoration: none;" href="/" >Blog</a>
       <br>
       <br>
     
-      <a class="link"  href="/about.html" >About</a>
+      <a class="link" style="text-decoration: none;" href="/about.html" >About</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/linux-and-more.html" >Linux and more</a>
+      <a class="link" style="text-decoration: none;" href="/categories/linux-and-more.html" >Linux and more</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/software.html" >Software</a>
+      <a class="link" style="text-decoration: none;" href="/categories/software.html" >Software</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/hardware.html" >Hardware</a>
+      <a class="link" style="text-decoration: none;" href="/categories/hardware.html" >Hardware</a>
       <br>
       <br>
     
-      <a class="link"  href="https://vlsiresources.com" >Resources</a>
+      <a class="link" style="text-decoration: none;" href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="https://github.com/saicharan0112" >GitHub</a>
       <br>
       <br>
     
@@ -47,7 +52,7 @@
       <div class="main-section">
         <h2 class="post-title">Eeprom Programmer</h2>
 <p style="color: rgb(77, 76, 76);">Date: 15 Jul 2022 </p>
-<p class="post-content">
+<p class="post-content" style="text-align: justify;">
     <p>From quite some time, I have been thinking about building the 8-bit computer based on SAP-1 architecture that is demoed on Ben Eater’s YouTube channel. But I never gave any further thoughts and always left that idea behind just because I thought it is a bit complex and involved a lot of components. However, I recently I saw a video as part of that series where an EEPROM programmer is build using Arduino and a shiftregister. It barely has more than 3 components to build something that interesting. I think that is the only video with the longest duration in the entire series. So, based on the number of components used in the process, I think its doeable and started planning to do it during my vacation because at some point I will be bored and getting engaged in this task can be pretty fun.</p>
 
 <p>So I started collecting all the components that are required - an EEPROM (28C16 2K x 8 from Excel Microelectronics), 8-bit shiftregisters (74HS595 from ST Microelectronics), breadboard, jumper wires and an Arduino Uno board (I tried with nano version but maybe because of not making it sit on the breadboard correctly, it didn’t quite do the job). As you can see, it involved all the regular components though I had to run between shops to find the EEPROM itself. I planned to just implement what is said on the video. To a person like me who barely worked on any ICs and did any Arduino projects, replicating what is done on the video is a big achievement. So, I thought that would be a good starting point.
@@ -61,65 +66,48 @@ First we define the pins and then we declare the pinModes. There is a very comfo
 <br />
 Below code should send serial data to the shiftregister and print back the output of the IC via serial monitor. I think this is the best way to work if LEDs are not present unlike that is shown in the video.</p>
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-#define SHIFT_DATA 2 // pin 11 in 595 <br />
+<!-- <p style="background-color: rgb(164, 168, 168); margin-right: 20%;"> -->
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#define SHIFT_DATA 2 // pin 11 in 595 
+#define SHIFT_CLK 3 // pin 12 in 595
+#define SHIFT_LATCH 4 // pin 14 in 595
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
 
-#define SHIFT_CLK 3 // pin 12 in 595 <br />
-
-#define SHIFT_LATCH 4 // pin 14 in 595<br />
-
-void setup() {<br />
+    <span class="n">shiftOut</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="err">#</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
     
-    pinMode(SHIFT_DATA, OUTPUT);<br />
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+
+    <span class="cp"># outputs of 74595 are connected to Arduino digital pins from 5 to 12.
+</span>    <span class="k">for</span> <span class="p">(</span><span class="n">pin</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="n">pin</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="n">pinMode</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">pin</span><span class="p">));</span>
+    <span class="p">}</span>
     
-    pinMode(SHIFT_CLK, OUTPUT); <br />
-
-    pinMode(SHIFT_LATCH, OUTPUT); <br />
-
-
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, #data);<br />
-
-    digitalWrite(SHIFT_LATCH, LOW);<br />
-
-    digitalWrite(SHIFT_LATCH, HIGH);<br />
-    
-    digitalWrite(SHIFT_LATCH, LOW);<br />
-    
-    Serial.begin(9600);<br />
-
-    # outputs of 74595 are connected to Arduino digital pins from 5 to 12. <br />
-    for (pin = 5; pin &lt;= 12; pin += 1){<br />
-        pinMode(pin, OUTPUT);<br />
-        Serial.println(digitalWrite(pin));<br />
-    }<br />
-    
-</p>
+</code></pre></div></div>
 
 <p><b>Confiuguring two shiftregisters to store 11 bits for the address info- </b>
 <br />
 The real reason behind using shiftregisters is because of the number of pins available to set address and access I/O ports in EEPROM. Arduino only has 13 digital pins out of which 0 and 1 can’t be used because of the serial monitor feature we are using to get the data from EEPROM. Hence we need to use the next 3 pins are for shiftregisters and next 8 pins are for reading the data. We use the last digital pin #13 for EEPROM’s write enable signal. This is important because we need to enable/disable when we are writing/reading the data respectively. There is also this outputEnable pin for EEPROM which lets us see the data that is inside it. Also since now we are using 11 bits of data, we need to connect pin 9 (serial output) of the first shiftregister to the pin 11 (serial input) of the second shiftregister. This way we will be able to store 11 bits along with the outputEnable bit in the two shiftregisters. 
 We implement the same idea inside the code.</p>
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-.... <br />
-... <br />
-.. <br />
-void setAddress(int address, bool outputEnable){ <br />
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">setAddress</span><span class="p">(</span><span class="kt">int</span> <span class="n">address</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">outputEnable</span><span class="p">){</span>
 
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address &gt;&gt; 8) | (outputEnable ? 0x00 : 0x80) );<br />
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);<br />
+    <span class="n">shiftOut</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="p">(</span><span class="n">address</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">outputEnable</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">)</span> <span class="p">);</span>
+    <span class="n">shiftOut</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
     
-    digitalWrite(SHIFT_LATCH, LOW);<br />
-    digitalWrite(SHIFT_LATCH, HIGH);<br />
-    digitalWrite(SHIFT_LATCH, LOW);<br />
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
     
-    }<br />
-..... <br />
-... <br />
-.. <br />
-. <br />
-    
-</p>
+    <span class="p">}</span>
+</code></pre></div></div>
 
 <p><b>Reading data from EEPROM - </b>
 <br /></p>
@@ -127,100 +115,94 @@ void setAddress(int address, bool outputEnable){ <br />
 <p>Now since we have configured our shift registers to send data for 11 address lines and 1 outputEnable, we can actually read data that is inside the EEPROM. Before we write code to do that, we first need to hook up our EEPROM in the setup. Pins 1 to 8 are the first 8 address lines that will be coming from the first shiftregister and pin 23, 22 and 19 are the last three address bits coming from the second register. Also the outputEnable i.e., pin 20 is coming from the last output bit (pin 7) of the second shiftregister. Pins 9 to 11 and 13 to 17 are connected to the digital pins of the Arduino along with the writeEnable (pin 21) to the last digital pin (pin 13 of the Arduino). Remaining connections are obvious from the data sheet. Now given all connections are set, we write the code to read the data from EEPROM.
 <br />
 Below code reads the EEPROM content in the address location #2 -</p>
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-#define SHIFT_DATA 2 // pin 11 in 595 <br />
-#define SHIFT_CLK 3 // pin 12 in 595 <br />
-#define SHIFT_LATCH 4 // pin 14 in 595 <br />
-#define EEPROM_DO 5  <br />
-#define EEPROM_D7 12 <br />
-#define WRITE_ENABLE 13 <br />
 
-void setAddress(int address, bool outputEnable){ <br />
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#define SHIFT_DATA 2 // pin 11 in 595 
+#define SHIFT_CLK 3 // pin 12 in 595
+#define SHIFT_LATCH 4 // pin 14 in 595 
+#define EEPROM_DO 5  
+#define EEPROM_D7 12 
+#define WRITE_ENABLE 13 
+</span>
+<span class="kt">void</span> <span class="nf">setAddress</span><span class="p">(</span><span class="kt">int</span> <span class="n">address</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">outputEnable</span><span class="p">){</span> 
 
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address &gt;&gt; 8) | (outputEnable ? 0x00 : 0x80) ); <br />
-    shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address); <br />
+    <span class="n">shiftOut</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="p">(</span><span class="n">address</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">outputEnable</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">)</span> <span class="p">);</span> 
+    <span class="n">shiftOut</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
     
-    digitalWrite(SHIFT_LATCH, LOW); <br />
-    digitalWrite(SHIFT_LATCH, HIGH); <br />
-    digitalWrite(SHIFT_LATCH, LOW); <br />
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span> 
 
-} <br />
+<span class="p">}</span> 
 
-byte readEEPROM(int address){ <br />
+<span class="n">byte</span> <span class="nf">readEEPROM</span><span class="p">(</span><span class="kt">int</span> <span class="n">address</span><span class="p">){</span> 
 
-    for (int pin = 5; pin &lt;= 12; pin += 1){ <br />
-    pinMode(pin, INPUT); <br />
-    } <br />
-    setAddress(address, true); <br />
-    byte data = 0; <br />
-    for (int pin = 12; pin &gt;= 5; pin -= 1) { <br />
-    data = (data &lt;&lt; 1) + digitalRead(pin); <br />
-    } <br />
-    return data; <br />
-} <br />
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pin</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="n">pin</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">){</span> 
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span> 
+    <span class="p">}</span> 
+    <span class="n">setAddress</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span> 
+    <span class="n">byte</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pin</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">pin</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span> 
+    <span class="p">}</span> 
+    <span class="k">return</span> <span class="n">data</span><span class="p">;</span> 
+<span class="p">}</span> 
 
-void setup() {<br />
-    // put your setup code here, to run once:<br />
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// put your setup code here, to run once:</span>
     
-    pinMode(SHIFT_DATA, OUTPUT);<br />
-    pinMode(SHIFT_CLK, OUTPUT); <br />
-    pinMode(SHIFT_LATCH, OUTPUT); <br />
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_DATA</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_CLK</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span> 
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SHIFT_LATCH</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span> 
     
-    digitalWrite(13, HIGH);<br />
-    pinMode(13, OUTPUT);<br />
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
     
-    Serial.begin(9600);<br />
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
     
-    // Read individual address <br />
-    Serial.println(readEEPROM(2));<br />
+    <span class="c1">// Read individual address </span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">readEEPROM</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
 
-</p>
+</code></pre></div></div>
 
-<p><b>Writing data to EEPROM - </b>
-<br /></p>
+<p><b>Writing data to EEPROM - </b></p>
 
 <p>Writing the data is very much similar to that of reading the data but only thing that needs to be done in addition is to enable the writeEnable (connected to pin#13 of Arduino) and set the pinmodes of Arduino. The delay something that needs to be picked from the datasheet. The value mentioned is 1 us but I gave 10us to increase the window size but this is not necessary. Ben Eater in his video troublshoots this part for quite some time. Below is the code to do that -</p>
 
-<p style="background-color: rgb(164, 168, 168); margin-right: 20%;">
-.... <br />
-... <br />
-.. <br />
-void writeEEPROM(int address, byte data){ <br />
-    for (int pin = 5; pin &lt;= 12; pin += 1) { <br />
-        pinMode(pin, OUTPUT);<br />
-        }<br />
-        setAddress(address, false);<br />
-        for (int pin = 5; pin &lt;= 12; pin += 1) {<br />
-        digitalWrite(pin, data &amp; 1);<br />
-        data = data &gt;&gt; 1;<br />
-        }<br />
-        digitalWrite(13, LOW);<br />
-        delayMicroseconds(10);<br />
-        digitalWrite(13, HIGH);<br />
-        delay(10);<br />
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kt">void</span> <span class="nf">writeEEPROM</span><span class="p">(</span><span class="kt">int</span> <span class="n">address</span><span class="p">,</span> <span class="n">byte</span> <span class="n">data</span><span class="p">){</span> 
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pin</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="n">pin</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="n">pinMode</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">setAddress</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pin</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="n">pin</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">data</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
     
-    }<br />
-..... <br />
-... <br />
-.. <br />
-. <br />
-    
-</p>
+    <span class="p">}</span>
+</code></pre></div></div>
 
-<p><b>Complete code to read and write data to EEPROM is available on GitHub - <a href="https://github.com/saicharan0112/eeprom_programmer/blob/main/eeprom_shiftreg_testing.ino">link to my GitHub repository</a> </b>
-<br />
-<br />
-Here is the image of my final setup where between all those jumper wires forest lies those three ICs. <br />
-<img src="/assets/images/eeprom_programmer.jpg" alt="eeprom_programmer_final_setup" style="width: 800px;" />
-<br /><br />
-<b>Closing thoughts - </b>
-<br />
-It was really exciting to build something like this. In the end, I had an EEPROM with the 7-segment display code available. I can reuse this process to build a lookup table to store values for operations and also store opcodes for something like the 8-bit computer. Given I never used EEPROMs and shiftregisters in this manner, it was really educational with all those troublshoots in the process. Especially learning the art of handling jumper wires and neatly wiring them.</p>
+<p>&lt;/p&gt;</p>
+
+<p><b>Complete code to read and write data to EEPROM is available on GitHub - <a href="https://github.com/saicharan0112/eeprom_programmer/blob/main/eeprom_shiftreg_testing.ino">link to my GitHub repository</a> </b></p>
+
+<p>Here is the image of my final setup where between all those jumper wires forest lies those three ICs. 
+<img src="/assets/images/eeprom_programmer.jpg" alt="eeprom_programmer_final_setup" style="width: 800px;" /></p>
+
+<p><b>Closing thoughts - </b></p>
+
+<p>It was really exciting to build something like this. In the end, I had an EEPROM with the 7-segment display code available. I can reuse this process to build a lookup table to store values for operations and also store opcodes for something like the 8-bit computer. Given I never used EEPROMs and shiftregisters in this manner, it was really educational with all those troublshoots in the process. Especially learning the art of handling jumper wires and neatly wiring them.</p>
 
 </p>
 
         <br><br>
-        <hr>
+        <hr style="background-color: black ; height: 0.05cm;">
+        <br>
       </div>
   </body>
 </html>

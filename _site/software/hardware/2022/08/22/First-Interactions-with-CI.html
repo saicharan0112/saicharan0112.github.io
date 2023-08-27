@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Circuits and Chips - First Interactions With Ci</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+
   </head>
   <body class="main">
       <div class="side-bar">
@@ -17,27 +18,31 @@
         <br><br>
         <nav style="text-align: center;">
     
-      <a class="link"  href="/" >Blog</a>
+      <a class="link" style="text-decoration: none;" href="/" >Blog</a>
       <br>
       <br>
     
-      <a class="link"  href="/about.html" >About</a>
+      <a class="link" style="text-decoration: none;" href="/about.html" >About</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/linux-and-more.html" >Linux and more</a>
+      <a class="link" style="text-decoration: none;" href="/categories/linux-and-more.html" >Linux and more</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/software.html" >Software</a>
+      <a class="link" style="text-decoration: none;" href="/categories/software.html" >Software</a>
       <br>
       <br>
     
-      <a class="link"  href="/categories/hardware.html" >Hardware</a>
+      <a class="link" style="text-decoration: none;" href="/categories/hardware.html" >Hardware</a>
       <br>
       <br>
     
-      <a class="link"  href="https://vlsiresources.com" >Resources</a>
+      <a class="link" style="text-decoration: none;" href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="https://github.com/saicharan0112" >GitHub</a>
       <br>
       <br>
     
@@ -47,13 +52,13 @@
       <div class="main-section">
         <h2 class="post-title">First Interactions With Ci</h2>
 <p style="color: rgb(77, 76, 76);">Date: 22 Aug 2022 </p>
-<p class="post-content">
+<p class="post-content" style="text-align: justify;">
     <p>My First interaction with the concept of CI (regression) in the world of chip design</p>
 
-<p>As an CAD engineer, my job involves bringing in both software and hardware/chip worlds together. Similar to the software development, continuous develoment happens to the design and it needs to be tested for both PPA and tool compatability. Though I was first involved in developing a regression workflow for opensource physical verification EDA tools like Magic and Netgen, it was more like automating the process of running designs, extracting reports, parsing them and checking if any errors are generated. I developed this workflow in 2021 and named it as Vezzal (The testing was happening more inside a docker container and the word 'Vessel' - a controlled environment for testing - came into my mind and I just went for it). As of 2023, this is still checking both the tools with the testcases. This was my first encounter to the concept of regression where I used docker and github actions.</p>
+<p>As an Engineer, my job involves bringing in both software and hardware/chip worlds together. Similar to the software development, continuous development happens to the design/IP and it needs to be tested for both PPA and tool compatability. Though I was first involved in developing a regression workflow for opensource physical verification EDA tools like Magic and Netgen, it was more like automating the process of running designs, extracting reports, parsing them and checking if any errors are generated. I developed this workflow in 2021 and named it as Vezzal (The testing was happening more inside a docker container and the word 'Vessel' - a controlled environment for testing - came into my mind and I just went with it). As of 2023, this is still checking both the tools with the testcases. This was my first encounter to the concept of regression where I used docker and github actions.</p>
 
-<p>Later I was involved in a few projects where I started developing regression flows using Jenkins for workflows, python for intermediate automation etc. But the biggest project is the OpenFASoC CI where I had to work on complicated workflows dealing with huge number of runs and computations. So I will try to explain this one. Though I am currently working on various other CI flows, I can't talk about them for obvious reasons.</p>
-<h3 id="how-openfasoc-ci-works">How OpenFASoC CI works</h3>
+<p>Later I was involved in a few projects where I started developing regression flows using Jenkins for workflows, python for intermediate automation etc. But OpenFASoC CI is a bit complicated given the generators uniqueness and the list of parameters that needs to be analyzed. I will try to give an overview of this in this post.</p>
+<h3>How OpenFASoC CI works</h3>
 
 <p>I would categorize the CI setup into three types based - tool update compatability, performance check and dataset development for model building. I will try to explain all three workflows, their way of implementation and the challenges involved in them.</p>
 <ul>
@@ -71,13 +76,14 @@ This is a advance version of the above workflow. Here the generator needs to be 
 Recently I was introduced to a GCP product named Batch (<a href="https://cloud.google.com/batch">https://cloud.google.com/batch</a>) which will do all the above jobs automatically - sharing of load, transfer of data, creating/managing/destroying the VMs etc. This method is currently being tested but I see this as a more promisible solution rather than using a infrastructure management tools suite like Terraform, Kubernetes etc.</p>
 </li>
 </ul>
-<h3 id="conclusion">Conclusion</h3>
-<p>I think this is really interesting because the traditional way of CI is fully automated whereas here each step should be custom developed (although there are possibilities where things can be automated like that of software model). I am actively working on these activities and I will try to write another blog post if I learn something new, especially for OpenFASoC CI.</p>
+<h3>Conclusion</h3>
+<p>I think this is really interesting because the traditional way of CI is fully automated whereas here each step should be custom developed (although there are possibilities where things can be automated like that of software model).</p>
 
 </p>
 
         <br><br>
-        <hr>
+        <hr style="background-color: black ; height: 0.05cm;">
+        <br>
       </div>
   </body>
 </html>

@@ -1,6 +1,6 @@
 <nav style="text-align: center;">
     {% for item in site.data.navigation %}
-      <a class="link" {% if item.new_tab == True %}target="_blank" rel="noopener noreferrer"{% endif %} href="{{ item.link }}" {% if page.url == item.link %}class="link-current"{% endif %}>{{ item.name }}</a>
+      <a class="link" style="text-decoration: none;" href="{{ item.link }}" {% if page.url == item.link %}class="link-current"{% endif %}>{{ item.name }}</a>
       <br>
       <br>
     {% endfor %}
