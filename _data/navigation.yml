@@ -3,7 +3,6 @@
   new_tab: False
 - name: About
   link: /about.html
-  new_tab: False
 - name: Linux and more
   link: /categories/linux-and-more.html
   new_tab: False
@@ -12,6 +11,9 @@
   new_tab: False
 - name: Hardware
   link: /categories/hardware.html
+  new_tab: False
+- name: Aviation
+  link: /aviation.html
   new_tab: False
 - name: Resources
   link: https://vlsiresources.com
