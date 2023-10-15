@@ -1,5 +1,5 @@
 - name: Blog
-  link: /
+  link: /blog.html
   new_tab: False
 - name: About
   link: /about.html

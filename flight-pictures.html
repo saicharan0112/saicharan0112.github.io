@@ -1,0 +1,16 @@
+---
+layout: default
+title: Aviation
+---
+
+<h2> <u>Aviation Pictures</u></h2>
+
+<ul>
+  {% for image in site.static_files %}
+    {% if image.path contains 'images/flight-pictures' %}
+        <img src="{{ site.baseurl }}{{ image.path }}" alt="image" width="300" height="auto" />
+    {% endif %}
+  {% endfor %}
+</ul>
+<br><br>
+

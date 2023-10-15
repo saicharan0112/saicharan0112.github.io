@@ -27,7 +27,12 @@ This video talks a bit detailed about the Airplane engine, especially the Boeing
 
 
 <br>
-<hr style="width:40%">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuLTppemEgA?si=eKm9_pON-iFa0pmR&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+VOR (VHF Omnidirection Range) is something similar to ILS that is used to navigate towards the destination but ILS is something called precise approach. This video gives a good overview on it. Also I found a good quora answer - <a href=https://qr.ae/pKt5xU>link</a>
+
+<br>
+<hr style="background-color: #000000 ; height: 0.05cm; width: 50%">
+<br>
 
 ## Physics
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3MjlqZtIpag?si=VuHMFtHTVB3u6UCi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -50,7 +55,8 @@ This video is really good in explaining the runway configurations again and incl
 
 
 <br>
-<hr style="width:40%">
+<hr style="background-color: #000000 ; height: 0.05cm; width: 50%">
+<br>
 
 ## Operations
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cftToIr9sAo?si=1Moo1hkDZN_zlHSM&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
