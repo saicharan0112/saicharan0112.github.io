@@ -12,6 +12,9 @@
 - name: Hardware
   link: /categories/hardware.html
   new_tab: False
+- name: Books
+  link: /categories/books.html
+  new_tab: False
 - name: Aviation
   link: /aviation.html
   new_tab: False
