@@ -6,7 +6,8 @@ title: Aviation
 # Aviation - YouTube Videos
 
 
-## Engineering
+<h2  style="text-align:center;"> <u> Engineering </u></h2>
+<br>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/taqMkdXL3Xg?si=fGu3KeNkXqJMAYIZ&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 This video talks about the ILS system that helps pilots navigate towards the runway during a fog/heavy rainy weather. The big lights you see arranged in different levels in the end of runways are part of this system.
 
@@ -28,13 +29,21 @@ This video talks a bit detailed about the Airplane engine, especially the Boeing
 
 <br>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuLTppemEgA?si=eKm9_pON-iFa0pmR&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-VOR (VHF Omnidirection Range) is something similar to ILS that is used to navigate towards the destination but ILS is something called precise approach. This video gives a good overview on it. Also I found a good quora answer - <a href=https://qr.ae/pKt5xU>link</a>
+VOR (VHF Omnidirection Range) is something similar to ILS that is used to navigate towards the destination but ILS is something called precise approach. VOR is considered to be both VFR (Visual Flight Rules) and IFR (Instrument Flight Rules) whereas ILS is purely IFR. This video gives a good overview on it. Also I found a good quora answer - <a href="https://qr.ae/pKt5xU">link</a>
+
+
+<br>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DPywv6XA7Dc?si=0JcYT3IM4Aci9Q4_&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+I think this video explains pretty good things about the basic equipment as part of flight navigation and control systems.
+
+
 
 <br>
 <hr style="background-color: #000000 ; height: 0.05cm; width: 50%">
 <br>
 
-## Physics
+<h2  style="text-align:center;"> <u> Physics </u></h2>
+<br>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3MjlqZtIpag?si=VuHMFtHTVB3u6UCi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 This video is really cool. It talks about the trans-atlantic flight routes where you get to learn about the Coriolis effect. After you watch this video, watch this airplane crash incident. It talks about the airstream in the equator and how weather there will effect the airplanes. <a href="https://youtu.be/e5AGHEUxLME?si=ojhebTeDXt3ErqVZ">https://youtu.be/e5AGHEUxLME?si=ojhebTeDXt3ErqVZ</a>
 
@@ -58,7 +67,8 @@ This video is really good in explaining the runway configurations again and incl
 <hr style="background-color: #000000 ; height: 0.05cm; width: 50%">
 <br>
 
-## Operations
+<h2  style="text-align:center;"> <u> Operations </u></h2>
+<br>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cftToIr9sAo?si=1Moo1hkDZN_zlHSM&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 This video talks about the origins of Emirates airlines company, which is considered to be one of the premium flight experiences and  top 5 airlines that has more international routes.
 

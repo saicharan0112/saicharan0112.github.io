@@ -18,13 +18,16 @@ Right now, I am looking at this book "Stick and Rudder" written by a German that
 
 ### Resources
 
-Here are a few YouTube videos to understand a few basic things in this industry - **[Aviation YouTube videos](/aviation_links.html)**
+* Here are a few YouTube videos to understand a few basic things in this industry - **[Aviation YouTube videos](/aviation_links.html)**
 
-Remember the 4 things that I mentioned above that I like in this field. Above link covers the first three and this one covers the last part, Mother nature - **[Flight pictures](/flight-pictures.html)**
+* Remember the 4 things that I mentioned above that I like in this field. Above link covers the first three and this one covers the last part, Mother nature - **[Flight pictures](/flight-pictures.html)**
 
-**Global Airspace realtime map - [https://www.flightradar24.com/](https://www.flightradar24.com/)**
+* **Global Airspace realtime map - [https://www.flightradar24.com/](https://www.flightradar24.com/)**
 
-**Indian Airspace map - [https://digitalsky.dgca.gov.in/airspace-map/#/app](https://digitalsky.dgca.gov.in/airspace-map/#/app)**
+* **Global Airport Navigation site - [https://ourairports.com/](https://ourairports.com/)** 
+One can find here info on VOR, NDB too
+
+* **Indian Airspace map - [https://digitalsky.dgca.gov.in/airspace-map/#/app](https://digitalsky.dgca.gov.in/airspace-map/#/app)**
 
 <br>
 
