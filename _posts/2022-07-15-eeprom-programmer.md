@@ -1,7 +1,7 @@
 ---
 layout: post
 author: jack
-category: [linux-and-more,hardware]
+category: [hardware]
 ---
 
 From quite some time, I have been thinking about building the 8-bit computer based on SAP-1 architecture that is demoed on Ben Eater's YouTube channel. But I never gave any further thoughts and always left that idea behind just because I thought it is a bit complex and involved a lot of components. However, I recently I saw a video as part of that series where an EEPROM programmer is build using Arduino and a shiftregister. It barely has more than 3 components to build something that interesting. I think that is the only video with the longest duration in the entire series. So, based on the number of components used in the process, I think its doeable and started planning to do it during my vacation because at some point I will be bored and getting engaged in this task can be pretty fun. 

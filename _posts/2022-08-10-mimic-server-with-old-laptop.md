@@ -1,7 +1,7 @@
 ---
 layout: post
 author: jack
-category: linux-and-more
+category: linux
 ---
 
 I have been reusing my old laptop for storage purposes, which runs Alpine OS on it. Nothing professional but just for fun. It is a 6th generation i3 processor 6006 with dual core processor 2.0 GHz, which is no longer supported by intel. For some reason, high end OS doesn’t work correctly. If you have already read my old Alpine blog, you might have understood the situation with the installations of various OS. In this blog post, I will try to give an overview of all steps starting from installation to setting up the static IP address along with SSH logins and sudoers file

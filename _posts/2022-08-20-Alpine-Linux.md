@@ -1,7 +1,7 @@
 ---
 layout: post
 author: jack
-category: linux-and-more
+category: linux
 ---
 
 In the world of Ubuntu, Linux Mint, Arch and many more, Alpine Linux was fresh and light to me.

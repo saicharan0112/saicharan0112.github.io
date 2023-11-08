@@ -15,6 +15,22 @@ Right now, I am looking at this book "Stick and Rudder" written by a German that
 <hr style="background-color: #000000 ; height: 0.05cm; width: 25%">
 <br>
 
+### Blog Articles
+
+{% for item in site.categories %}
+  {% if item[0] == "aviation" %}
+    <h3>Category: {{ item[0] }}</h3>
+    <ul>
+      {% for post in item[1] %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endfor %}
+
+<br>
+<hr style="background-color: #000000 ; height: 0.05cm; width: 25%">
+<br>
 
 ### Resources
 
