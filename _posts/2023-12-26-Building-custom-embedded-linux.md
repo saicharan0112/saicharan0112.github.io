@@ -4,6 +4,7 @@ author: jack
 category: [linux,hardware]
 ---
 
+I recently started understanding the software part of embedded systems. And this is the first attempt to gets hands-on building custom linux-based images. 
 
 ### Yocto Project
 
