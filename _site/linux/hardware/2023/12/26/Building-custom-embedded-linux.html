@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Circuits and Chips - Building Custom Embedded Linux</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+  </head>
+  <body class="main">
+      <div class="side-bar">
+        
+        <a href="/index.html" style="text-decoration: none;">
+          <img src="/assets/images/mosfet.png" alt="" style="height: 3cm; width: 5cm; margin-left:auto; margin-right: auto; display: block;">
+          <h2 style="text-align: center; color: rgb(253, 253, 253);font-size: larger;">
+          Circuits <br> and Chips
+        </h2></a>
+        <p style="padding-left: 10px; font-size: small; padding-right: 5px; text-align: center; color: rgb(201, 206, 206);">a place to write on software, chip development and linux, for fun and in an informal way.</p>
+        <br><br>
+        <nav style="text-align: center;">
+    
+      <a class="link" style="text-decoration: none;" href="/blog.html" >Blog</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/about.html" >About</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/categories/linux.html" >Linux</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/categories/software.html" >Software</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/categories/hardware.html" >Hardware</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/categories/books.html" >Books</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="/aviation.html" >Aviation</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="https://vlsiresources.com" >Resources</a>
+      <br>
+      <br>
+    
+      <a class="link" style="text-decoration: none;" href="https://github.com/saicharan0112" >GitHub</a>
+      <br>
+      <br>
+    
+</nav>
+        <br><br>
+        <img src="/assets/images/linuxnow.gif" style="padding-left: 20px;">
+        <img src="/assets/images/octocat.png" style="padding-left: 5px;" width="40px" height="40px">
+      </div>
+      <div class="main-section">
+        <h2 class="post-title">Building Custom Embedded Linux</h2>
+<p style="color: rgb(77, 76, 76);">Date: 26 Dec 2023 </p>
+<p class="post-content" style="text-align: justify;">
+    <h3 id="yocto-project">Yocto Project</h3>
+
+<h4 id="instructions-to-getting-started-on-building-custom-embedded-linux--">Instructions to getting-started on building custom embedded linux -</h4>
+
+<ol>
+  <li>Clone the Poky Github repo from Yocto with branch selected as the version of interest.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone -b kirkstone git://git.yoctoproject.org/poky
+cd poky
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Source the build environment script to create config template files and the build directory - 
+<code class="language-plaintext highlighter-rouge">source oe-init-build-env</code></p>
+  </li>
+  <li>
+    <p>Edit the <code class="language-plaintext highlighter-rouge">conf/local.conf</code> file if wanted to change the targeted machine name. By default, <code class="language-plaintext highlighter-rouge">qemux86-64</code> is selected.</p>
+  </li>
+  <li>
+    <p>Now run <code class="language-plaintext highlighter-rouge">bitbake core-image-sato</code>. This is going to take a lot of time and if everything went well, your <code class="language-plaintext highlighter-rouge">build/</code> directory will be populated with a variety of folders and the images are present inside the <code class="language-plaintext highlighter-rouge">/tmp/deploy/images/&lt;MACHINE&gt;</code></p>
+  </li>
+  <li>To run the image that you just built, run <code class="language-plaintext highlighter-rouge">runqemu qemux86-64</code> and a new xterm window will open with the Yocto custom OS loaded. (note: mine was buggy for some reason. I wouldn’t navigate after some time and all the icons were weird but I proceeded further anyways following the same procedure to create a custom raspberrypi image).</li>
+</ol>
+
+<h4 id="instructions-to-create-a-quick-base-raspberrypi-image-for-a-targetted-raspberrypy-board--">Instructions to create a quick base raspberrypi image for a targetted raspberrypy board -</h4>
+
+<ol>
+  <li>
+    <p>Follow the same first step above and clone the poky repo if not present, else skip it.</p>
+  </li>
+  <li>
+    <p>Now download the repo containing the meta data(image) of the raspberrypi for the same poky version (mine was “kirkstone”) - <code class="language-plaintext highlighter-rouge">git clone https://git.yoctoproject.org/meta-raspberrypi/ -b kirkstone</code></p>
+  </li>
+  <li>
+    <p>Now source the build environment script to create config template files just like previous case - <code class="language-plaintext highlighter-rouge">source oe-init-build-env</code></p>
+  </li>
+  <li>
+    <p>Edit the <code class="language-plaintext highlighter-rouge">conf/local.conf</code> to add the machine name <code class="language-plaintext highlighter-rouge">MACHINE  ??= raspberrypi4-64</code> and <code class="language-plaintext highlighter-rouge">IMAGE_FSTYPES = "tar.xz ext3 rpi-sdimg"</code>.</p>
+  </li>
+  <li>
+    <p>Also edit the <code class="language-plaintext highlighter-rouge">conf/bblayers.conf</code> to add the full path of the above cloned <code class="language-plaintext highlighter-rouge">meta-raspberrypi</code> github repo to the <code class="language-plaintext highlighter-rouge">BBLAYERS</code> variable in the end.</p>
+  </li>
+  <li>
+    <p>Once done with the edits, go ahead and build the image using the command <code class="language-plaintext highlighter-rouge">bitbake rpi-test-image</code>. Again, this will take good amount of time to build the <code class="language-plaintext highlighter-rouge">.rpi-sdimg</code>.</p>
+  </li>
+  <li>
+    <p>If the above step completed without any errors, now you can flash this image into an SD card and insert in the raspberrypi slot.</p>
+  </li>
+  <li>
+    <p>To flash the image from the terminal, you can use <code class="language-plaintext highlighter-rouge">dd</code>. Below the full command
+<code class="language-plaintext highlighter-rouge">sudo dd if=&lt;path to the .rpi-sdimg file&gt; of=/dev/sdaX</code> where X stands for the number designated for the (sd card) device on your machine.</p>
+  </li>
+  <li>
+    <p>Once done, connect your raspberrypi to a monitor, a keyboard and insert this sd card for the raspberrypi to boot from.</p>
+  </li>
+</ol>
+
+</p>
+
+        <br><br>
+        <hr style="background-color: #000000 ; height: 0.05cm;">
+        <br>
+      </div>
+  </body>
+</html>
